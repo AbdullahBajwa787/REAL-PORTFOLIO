@@ -1,7 +1,7 @@
 /**
- * ABDULLAH BAJWA — ULTRA-PREMIUM & ULTRA-SMOOTH DEVELOPER PORTFOLIO
- * High-performance Liquid Scroll, Magnetic Micro-Physics, 3D Cosmos Engine,
- * Web Audio Synthesizer, Command Palette, and Dynamic Spotlight Effects.
+ * ABDULLAH BAJWA — ULTRA-PREMIUM & HIGH-PERFORMANCE DEVELOPER PORTFOLIO
+ * Zero-Lag 60/120 FPS Rendering, Optimized 3D Particle Cosmos,
+ * Audio Synthesizer, Command Palette, and Lightning-Fast Filtering.
  */
 
 // ─── Sound Synthesizer (Web Audio API) ───
@@ -38,15 +38,15 @@ class SoundEngine {
       const gain = this.ctx.createGain();
       osc.type = 'sine';
       osc.frequency.setValueAtTime(860, this.ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(380, this.ctx.currentTime + 0.05);
+      osc.frequency.exponentialRampToValueAtTime(380, this.ctx.currentTime + 0.04);
 
-      gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.05);
+      gain.gain.setValueAtTime(0.06, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.04);
 
       osc.connect(gain);
       gain.connect(this.ctx.destination);
       osc.start();
-      osc.stop(this.ctx.currentTime + 0.05);
+      osc.stop(this.ctx.currentTime + 0.04);
     } catch (e) {}
   }
 
@@ -60,15 +60,15 @@ class SoundEngine {
       const gain = this.ctx.createGain();
       osc.type = 'triangle';
       osc.frequency.setValueAtTime(340, this.ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(720, this.ctx.currentTime + 0.08);
+      osc.frequency.exponentialRampToValueAtTime(700, this.ctx.currentTime + 0.06);
 
-      gain.gain.setValueAtTime(0.07, this.ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.08);
+      gain.gain.setValueAtTime(0.05, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.06);
 
       osc.connect(gain);
       gain.connect(this.ctx.destination);
       osc.start();
-      osc.stop(this.ctx.currentTime + 0.08);
+      osc.stop(this.ctx.currentTime + 0.06);
     } catch (e) {}
   }
 }
@@ -93,11 +93,11 @@ function showToast(message, icon = '✓') {
 
   setTimeout(() => {
     toast.remove();
-  }, 3000);
+  }, 2800);
 }
 
-// ─── Custom Smooth Cursor & Magnetic Physics ───
-(function initSmoothCursorAndMagnet() {
+// ─── Ultra-Lightweight Custom Cursor (GPU-Accelerated) ───
+(function initSmoothCursor() {
   const cursorWrap = document.getElementById('cursor-wrap');
   const dot = document.getElementById('cursor-dot');
   const ring = document.getElementById('cursor-ring');
@@ -108,83 +108,66 @@ function showToast(message, icon = '✓') {
     return;
   }
 
-  let mouseX = window.innerWidth / 2;
-  let mouseY = window.innerHeight / 2;
-  let ringX = mouseX;
-  let ringY = mouseY;
+  let mouseX = -100;
+  let mouseY = -100;
+  let ringX = -100;
+  let ringY = -100;
 
   window.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    dot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
-  });
+    dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+  }, { passive: true });
 
   function renderRing() {
-    ringX += (mouseX - ringX) * 0.18;
-    ringY += (mouseY - ringY) * 0.18;
-    ring.style.transform = `translate(${ringX}px, ${ringY}px)`;
+    ringX += (mouseX - ringX) * 0.22;
+    ringY += (mouseY - ringY) * 0.22;
+    ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
     requestAnimationFrame(renderRing);
   }
   requestAnimationFrame(renderRing);
 
-  // Hover states on interactive elements
+  // Active hover states on interactive elements
   const clickables = document.querySelectorAll('a, button, input, textarea, .spotlight-card, [role="button"], .tab-btn');
   clickables.forEach((el) => {
     el.addEventListener('mouseenter', () => cursorWrap.classList.add('active'));
     el.addEventListener('mouseleave', () => cursorWrap.classList.remove('active'));
   });
-
-  // Magnetic Pull Physics
-  const magnetics = document.querySelectorAll('.magnetic, .btn-primary-glow, .btn-secondary-glass, .icon-btn, .brand-badge');
-  magnetics.forEach((el) => {
-    el.addEventListener('mousemove', (e) => {
-      const rect = el.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      const deltaX = (e.clientX - centerX) * 0.28;
-      const deltaY = (e.clientY - centerY) * 0.28;
-      el.style.transform = `translate3d(${deltaX}px, ${deltaY}px, 0)`;
-    });
-
-    el.addEventListener('mouseleave', () => {
-      el.style.transform = 'translate3d(0, 0, 0)';
-    });
-  });
 })();
 
-// ─── High-DPI 3D Cosmos & Particle Physics Canvas ───
+// ─── High-Performance 60 FPS 3D Cosmos Canvas (Zero-Lag Engine) ───
 (function initCosmos() {
   const canvas = document.getElementById('cosmos-canvas');
-  if (!canvas) return;
+  const heroSection = document.getElementById('home');
+  if (!canvas || !heroSection) return;
   const ctx = canvas.getContext('2d');
 
   let width, height, centerX, centerY, radius;
   let mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let isHeroVisible = true;
+  let animId = null;
 
   function resize() {
     width = canvas.offsetWidth;
     height = canvas.offsetHeight;
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
-    ctx.scale(dpr, dpr);
+    canvas.width = width;
+    canvas.height = height;
     centerX = width / 2;
     centerY = height / 2;
     radius = Math.min(width, height) * 0.36;
   }
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', resize, { passive: true });
   resize();
 
   window.addEventListener('mousemove', (e) => {
-    const rect = canvas.getBoundingClientRect();
-    if (e.clientY < rect.bottom) {
+    if (e.clientY <= height) {
       mouse.targetX = (e.clientX - centerX) / (width * 0.5);
       mouse.targetY = (e.clientY - centerY) / (height * 0.5);
     }
-  });
+  }, { passive: true });
 
-  // Generate 3D sphere points via Fibonacci lattice
-  const NUM_POINTS = 360;
+  // 150 points for optimal performance & crisp geometric aesthetics
+  const NUM_POINTS = 150;
   const points = [];
   for (let i = 0; i < NUM_POINTS; i++) {
     const phi = Math.acos(1 - (2 * (i + 0.5)) / NUM_POINTS);
@@ -196,7 +179,7 @@ function showToast(message, icon = '✓') {
     });
   }
 
-  // Interconnecting line pairs
+  // Pre-calculate connected line pairs
   const lines = [];
   for (let i = 0; i < points.length; i += 2) {
     for (let j = i + 1; j < points.length; j += 3) {
@@ -204,67 +187,39 @@ function showToast(message, icon = '✓') {
       const dy = points[i].y - points[j].y;
       const dz = points[i].z - points[j].z;
       const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-      if (dist < 0.35) {
+      if (dist < 0.38) {
         lines.push([i, j]);
       }
     }
-  }
-
-  // Background floating cosmic dust
-  const DUST_COUNT = 60;
-  const dust = [];
-  for (let i = 0; i < DUST_COUNT; i++) {
-    dust.push({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      size: Math.random() * 1.5 + 0.5,
-      speedX: (Math.random() - 0.5) * 0.3,
-      speedY: (Math.random() - 0.5) * 0.3,
-      alpha: Math.random() * 0.5 + 0.2
-    });
   }
 
   let angleY = 0;
   let angleX = 0;
 
   function render() {
+    if (!isHeroVisible) return;
+
     ctx.clearRect(0, 0, width, height);
 
-    // Draw cosmic dust
-    dust.forEach((d) => {
-      d.x += d.speedX;
-      d.y += d.speedY;
-      if (d.x < 0) d.x = width;
-      if (d.x > width) d.x = 0;
-      if (d.y < 0) d.y = height;
-      if (d.y > height) d.y = 0;
+    mouse.x += (mouse.targetX - mouse.x) * 0.05;
+    mouse.y += (mouse.targetY - mouse.y) * 0.05;
 
-      ctx.beginPath();
-      ctx.arc(d.x, d.y, d.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(0, 242, 254, ${d.alpha.toFixed(2)})`;
-      ctx.fill();
-    });
-
-    // Smooth inertia interpolation
-    mouse.x += (mouse.targetX - mouse.x) * 0.06;
-    mouse.y += (mouse.targetY - mouse.y) * 0.06;
-
-    angleY += 0.003 + mouse.x * 0.009;
-    angleX = mouse.y * 0.35;
+    angleY += 0.0035 + mouse.x * 0.008;
+    angleX = mouse.y * 0.3;
 
     const cosY = Math.cos(angleY);
     const sinY = Math.sin(angleY);
     const cosX = Math.cos(angleX);
     const sinX = Math.sin(angleX);
 
-    // Project points
+    // Fast 3D Projection
     const projected = points.map((p) => {
       let x = p.x * cosY - p.z * sinY;
       let z = p.x * sinY + p.z * cosY;
       let y = p.y * cosX - z * sinX;
       z = p.y * sinX + z * cosX;
 
-      const scale = 2.0 / (2.5 - z);
+      const scale = 1.9 / (2.4 - z);
       return {
         screenX: centerX + x * radius * scale,
         screenY: centerY + y * radius * scale,
@@ -273,76 +228,56 @@ function showToast(message, icon = '✓') {
       };
     });
 
-    // Draw connecting lines
-    lines.forEach(([a, b]) => {
+    // Draw lines in batch
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(0, 242, 254, 0.14)';
+    ctx.lineWidth = 0.7;
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b] = lines[i];
       const p1 = projected[a];
       const p2 = projected[b];
-      const avgZ = (p1.z + p2.z) / 2;
-      const alpha = Math.max(0, (avgZ + 1) / 2) * 0.25;
+      if ((p1.z + p2.z) > -0.5) {
+        ctx.moveTo(p1.screenX, p1.screenY);
+        ctx.lineTo(p2.screenX, p2.screenY);
+      }
+    }
+    ctx.stroke();
 
-      ctx.beginPath();
-      ctx.moveTo(p1.screenX, p1.screenY);
-      ctx.lineTo(p2.screenX, p2.screenY);
-      ctx.strokeStyle = `rgba(0, 242, 254, ${alpha.toFixed(3)})`;
-      ctx.lineWidth = 0.65;
-      ctx.stroke();
-    });
+    // Draw dots without expensive shadowBlur!
+    ctx.fillStyle = 'rgba(0, 242, 254, 0.85)';
+    for (let i = 0; i < projected.length; i++) {
+      const p = projected[i];
+      if (p.z > -0.8) {
+        const size = Math.max(0.9, p.scale * 2.2);
+        ctx.beginPath();
+        ctx.arc(p.screenX, p.screenY, size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
 
-    // Draw sphere points with glow
-    projected.forEach((p) => {
-      const alpha = Math.max(0.12, (p.z + 1) / 2);
-      const size = Math.max(0.9, p.scale * 2.2);
-
-      ctx.beginPath();
-      ctx.arc(p.screenX, p.screenY, size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(0, 242, 254, ${(alpha * 0.9).toFixed(3)})`;
-      ctx.shadowColor = 'rgba(0, 242, 254, 0.7)';
-      ctx.shadowBlur = size * 3;
-      ctx.fill();
-      ctx.shadowBlur = 0;
-    });
-
-    // Orbital ring glow
-    const grad = ctx.createRadialGradient(centerX, centerY, radius * 0.5, centerX, centerY, radius * 1.15);
-    grad.addColorStop(0, 'transparent');
-    grad.addColorStop(0.85, 'rgba(0, 242, 254, 0.05)');
-    grad.addColorStop(1, 'transparent');
-
+    // Outer orbital ring
     ctx.beginPath();
-    ctx.arc(centerX, centerY, radius * 1.1, 0, Math.PI * 2);
-    ctx.fillStyle = grad;
-    ctx.fill();
+    ctx.arc(centerX, centerY, radius * 1.08, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(0, 242, 254, 0.06)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
 
-    requestAnimationFrame(render);
+    animId = requestAnimationFrame(render);
   }
-  requestAnimationFrame(render);
-})();
 
-// ─── Dynamic 3D Card Tilt & Cursor Spotlight ───
-(function initCardTilt() {
-  const cards = document.querySelectorAll('.spotlight-card, .project-card, .bento-card, .skill-card');
+  // PAUSE canvas when scrolled past hero section to save 100% GPU/CPU!
+  const heroObserver = new IntersectionObserver((entries) => {
+    isHeroVisible = entries[0].isIntersecting;
+    if (isHeroVisible) {
+      if (!animId) render();
+    } else {
+      cancelAnimationFrame(animId);
+      animId = null;
+    }
+  }, { threshold: 0.05 });
 
-  cards.forEach((card) => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
-
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const rotateX = ((y - centerY) / centerY) * -5;
-      const rotateY = ((x - centerX) / centerX) * 5;
-
-      card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-4px)`;
-    });
-
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-    });
-  });
+  heroObserver.observe(heroSection);
+  render();
 })();
 
 // ─── Theme Switcher Engine ───
@@ -417,7 +352,7 @@ function showToast(message, icon = '✓') {
       ? current.substring(0, charIndex--)
       : current.substring(0, charIndex++);
 
-    let speed = isDeleting ? 45 : 85;
+    let speed = isDeleting ? 40 : 80;
 
     if (!isDeleting && charIndex > current.length) {
       speed = 2200;
@@ -431,38 +366,46 @@ function showToast(message, icon = '✓') {
 
     setTimeout(typeLoop, speed);
   }
-  setTimeout(typeLoop, 800);
+  setTimeout(typeLoop, 600);
 })();
 
-// ─── Navbar Scroll & Reading Progress ───
+// ─── Navbar Scroll & Reading Progress (Throttled) ───
 (function initNavbarScroll() {
   const navbar = document.getElementById('navbar');
   const progressBar = document.getElementById('progress-bar');
   const backTopBtn = document.getElementById('back-top-btn');
 
+  let ticking = false;
+
   window.addEventListener('scroll', () => {
-    const scrolled = window.scrollY;
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = (scrolled / maxScroll) * 100;
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const scrolled = window.scrollY;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = (scrolled / maxScroll) * 100;
 
-    if (progressBar) progressBar.style.width = `${pct}%`;
+        if (progressBar) progressBar.style.width = `${pct}%`;
 
-    if (navbar) {
-      if (scrolled > 30) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
+        if (navbar) {
+          if (scrolled > 30) {
+            navbar.classList.add('scrolled');
+          } else {
+            navbar.classList.remove('scrolled');
+          }
+        }
+
+        if (backTopBtn) {
+          if (scrolled > 400) {
+            backTopBtn.classList.add('visible');
+          } else {
+            backTopBtn.classList.remove('visible');
+          }
+        }
+        ticking = false;
+      });
+      ticking = true;
     }
-
-    if (backTopBtn) {
-      if (scrolled > 400) {
-        backTopBtn.classList.add('visible');
-      } else {
-        backTopBtn.classList.remove('visible');
-      }
-    }
-  });
+  }, { passive: true });
 
   if (backTopBtn) {
     backTopBtn.addEventListener('click', () => {
@@ -520,7 +463,7 @@ function showToast(message, icon = '✓') {
         }
       });
     },
-    { threshold: 0.3 }
+    { threshold: 0.25 }
   );
 
   sections.forEach((sec) => observer.observe(sec));
@@ -538,11 +481,11 @@ function showToast(message, icon = '✓') {
         }
       });
     },
-    { threshold: 0.08 }
+    { threshold: 0.05 }
   );
 
   reveals.forEach((el, idx) => {
-    el.style.transitionDelay = `${(idx % 4) * 80}ms`;
+    el.style.transitionDelay = `${(idx % 3) * 60}ms`;
     observer.observe(el);
   });
 })();
@@ -560,7 +503,7 @@ function showToast(message, icon = '✓') {
         }
       });
     },
-    { threshold: 0.3 }
+    { threshold: 0.25 }
   );
 
   skillCards.forEach((c) => observer.observe(c));
@@ -572,12 +515,12 @@ function showToast(message, icon = '✓') {
 
   function runCounter(el) {
     const target = +el.dataset.target;
-    const duration = 1600;
+    const duration = 1400;
     const startTime = performance.now();
 
     function update(now) {
       const progress = Math.min((now - startTime) / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 4);
+      const ease = 1 - Math.pow(1 - progress, 3);
       el.textContent = Math.round(ease * target);
       if (progress < 1) requestAnimationFrame(update);
     }
@@ -593,7 +536,7 @@ function showToast(message, icon = '✓') {
         }
       });
     },
-    { threshold: 0.4 }
+    { threshold: 0.3 }
   );
 
   const statsSection = document.querySelector('.hero-stats');
