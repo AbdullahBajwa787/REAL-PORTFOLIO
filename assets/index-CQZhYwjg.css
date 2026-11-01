@@ -9,7 +9,7 @@ a[href="https://github.com/abdullahbajwa"],a[href^="https://twitter.com/abdullah
   html { scroll-behavior: smooth; }
 }
 html { overscroll-behavior: none; }
-canvas { filter: blur(10px) saturate(1.4); transform: translateZ(0); pointer-events: none; }
+canvas { filter: none !important; transform: translateZ(0); pointer-events: none; }
 * { cursor: none !important; }
 @media (hover: none) { * { cursor: auto !important; } }
 
