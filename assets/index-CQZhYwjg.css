@@ -33,3 +33,24 @@ canvas { filter: blur(10px) saturate(1.4); transform: translateZ(0); pointer-eve
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 }
+/* --- Projects Vertical Sizing --- */
+.project-card-custom {
+  min-height: 520px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+}
+.project-preview-stage {
+  height: 320px !important;
+  min-height: 320px !important;
+  width: 100% !important;
+}
+@media (min-width: 768px) {
+  .project-card-custom {
+    min-height: 560px !important;
+  }
+  .project-preview-stage {
+    height: 350px !important;
+    min-height: 350px !important;
+  }
+}
