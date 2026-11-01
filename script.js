@@ -515,14 +515,16 @@ function showToast(message, icon = '✓') {
 
   function runCounter(el) {
     const target = +el.dataset.target;
+    const suffix = el.dataset.suffix || '';
     const duration = 1400;
     const startTime = performance.now();
 
     function update(now) {
       const progress = Math.min((now - startTime) / duration, 1);
       const ease = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.round(ease * target);
+      el.textContent = Math.round(ease * target) + suffix;
       if (progress < 1) requestAnimationFrame(update);
+      else el.textContent = target + suffix;
     }
     requestAnimationFrame(update);
   }
