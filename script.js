@@ -554,11 +554,12 @@ function showToast(message, icon = '✓') {
     const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
 
     items.forEach((item) => {
-      const cat = item.dataset.category;
+      const cat = item.dataset.category || '';
       const title = item.dataset.title.toLowerCase();
       const tags = (item.dataset.tags || '').toLowerCase();
+      const catList = cat.split(',').map((c) => c.trim().toLowerCase());
 
-      const matchCat = currentCategory === 'all' || cat === currentCategory;
+      const matchCat = currentCategory === 'all' || cat === currentCategory || catList.includes(currentCategory.toLowerCase());
       const matchSearch = !query || title.includes(query) || tags.includes(query) || cat.toLowerCase().includes(query);
 
       if (matchCat && matchSearch) {
@@ -756,6 +757,8 @@ function showToast(message, icon = '✓') {
         a.href = 'Abdullah-Bajwa-Resume.png';
         a.download = 'Abdullah-Bajwa-Resume.png';
         a.click();
+      } else if (action === 'url' || action === 'link') {
+        if (item.dataset.url) window.open(item.dataset.url, '_blank');
       }
     });
   });
