@@ -10,7 +10,7 @@ a[href="https://github.com/abdullahbajwa"],a[href^="https://twitter.com/abdullah
 }
 html { overscroll-behavior: none; }
 canvas { filter: none !important; transform: translateZ(0); pointer-events: none; }
-* { cursor: none !important; }
+/* cursor active */
 @media (hover: none) { * { cursor: auto !important; } }
 
 /* --- Projects 2-column side-by-side alignment --- */
