@@ -11,13 +11,27 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-html, body {
-  overflow-x: hidden !important;
+html {
+  scroll-behavior: smooth !important;
+  scroll-padding-top: 5.5rem !important;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: auto;
+}
+
+body {
+  overflow-x: clip !important;
+  overflow-y: visible !important;
   max-width: 100vw !important;
   width: 100%;
+  min-height: 100%;
   position: relative;
   margin: 0;
   padding: 0;
+  touch-action: pan-y !important;
+  -webkit-overflow-scrolling: touch !important;
 }
 
 /* Image optimization & CLS prevention */
