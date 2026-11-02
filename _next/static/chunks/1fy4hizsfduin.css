@@ -1,5 +1,40 @@
 
 /* ========================================================
+   EXTREME MOBILE SCROLL & PERFORMANCE OPTIMIZATIONS
+   ======================================================== */
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: auto !important; /* Prevents touch swipe fighting CSS smooth scroll */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
+    overflow-x: clip !important;
+  }
+
+  /* Kill GPU fillrate killers on mobile */
+  nav, .backdrop-blur-xl, .backdrop-blur-sm, .backdrop-blur-md, [class*="backdrop-blur"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(5, 5, 20, 0.96) !important;
+  }
+
+  /* Disable expensive continuous drop-shadows and 3D card tilts on mobile */
+  .relative[style*="perspective"] {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* Prevent layout shifts */
+  canvas {
+    pointer-events: none !important;
+    touch-action: pan-y !important;
+  }
+}
+
+/* ========================================================
    CRITICAL MOBILE RESPONSIVENESS & SMOOTHNESS ENHANCEMENTS
    ======================================================== */
 html {
